@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-// Tabla de usuarios que almacena los datos básicos de cada usuario
+// Tabla de fotos para almacenar imágenes de forma polimórfica
 return new class extends Migration
 {
     /**
@@ -12,11 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('photos', function (Blueprint $table) {
             $table->id(); // id: Identificador único
-            $table->string('name'); // name: Nombre del usuario, obligatorio
-            $table->string('email')->unique(); // email: Correo único, obligatorio
-            $table->string('password'); // password: Contraseña, obligatoria
+            $table->string('url'); // url: Ubicación de la imagen, obligatorio
+            $table->unsignedBigInteger('imageable_id'); // imageable_id: Id del modelo relacionado
+            $table->string('imageable_type'); // imageable_type: Tipo del modelo relacionado (ej. Restaurant)
             $table->timestamps(); // created_at y updated_at
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('photos');
     }
 };
